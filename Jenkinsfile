@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'sample-project', 
+                    url: 'https://github.com/JayakrishnanPrakash/sample-project'
+            }
+        }
         stage('Build') {
             steps { 
-                checkout SCM
                 sh 'npm install' 
                 sh 'npm run build' 
                 sh 'ls'
