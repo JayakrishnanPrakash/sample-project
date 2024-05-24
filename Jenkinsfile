@@ -7,7 +7,7 @@ pipeline {
                 sh 'npm run build'
                 sh 'ls'
                 sh 'cd build'
-                sh 'ls'
+                sh 'ls' 
             }
         }
         stage('S3 Upload') {
