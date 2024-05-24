@@ -10,7 +10,7 @@ pipeline {
                 sh 'ls'
             }
         }
-        stage('S3 Upload') {
+        stage('S3 Upload') {  
             steps {
                 withAWS(region: 'us-east-1', credentials: '7d321218-b197-4c83-953a-bd157a1825ee') {
                     sh 'ls -la build'
