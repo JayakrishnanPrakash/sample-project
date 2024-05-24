@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps { 
+                checkout scm
                 sh 'npm install' 
                 sh 'npm run build' 
                 sh 'ls'
