@@ -8,7 +8,7 @@ pipeline {
     }
     stages {
         stage('Setup Node.js') {
-            steps {
+            steps { 
                 sh '''
                     # Ensure the NVM_DIR directory exists
                     mkdir -p ${NVM_DIR}
