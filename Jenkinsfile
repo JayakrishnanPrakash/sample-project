@@ -4,9 +4,15 @@ pipeline {
         stage('Setup Node.js') {
             steps {
                 sh '''
-                    # Install Node.js and npm
-                    curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
+                    # Install nvm (Node Version Manager)
+                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+                    
+                    # Load nvm and install Node.js
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    nvm install 16
+                    nvm use 16
+                    nvm alias default 16
                     node -v
                     npm -v
                 '''
