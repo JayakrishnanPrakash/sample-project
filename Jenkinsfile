@@ -4,7 +4,7 @@ pipeline {
         NVM_DIR = "${WORKSPACE}/.nvm"
         AWS_REGION = 'us-east-1'
         AWS_CREDENTIALS_ID = '7d321218-b197-4c83-953a-bd157a1825ee'
-        PATH = "${WORKSPACE}/.local/bin:${env.PATH}" 
+        PATH = "${WORKSPACE}/.local/bin:${env.PATH}"
     }
     stages {
         stage('Setup Node.js') {
@@ -41,7 +41,7 @@ pipeline {
                 '''
             }
         }
-        stage('Install AWS CLI') {
+        stage('Install/Update AWS CLI') {
             steps {
                 sh '''
                     if ! command -v aws &> /dev/null; then
@@ -50,7 +50,10 @@ pipeline {
                         unzip -o awscliv2.zip
                         ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin
                     else
-                        echo "AWS CLI already installed."
+                        echo "AWS CLI already installed, updating..."
+                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                        unzip -o awscliv2.zip
+                        ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin --update
                     fi
                 '''
             }
