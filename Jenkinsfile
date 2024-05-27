@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p ${NVM_DIR}
-                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+                    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash 
                     export NVM_DIR="${NVM_DIR}"
                     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                     nvm install 16
