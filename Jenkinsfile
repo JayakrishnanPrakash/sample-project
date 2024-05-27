@@ -7,11 +7,14 @@ pipeline {
         stage('Setup Node.js') {
             steps {
                 sh '''
+                    # Ensure the NVM_DIR directory exists
+                    mkdir -p ${NVM_DIR}
+                    
                     # Install nvm (Node Version Manager)
                     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
                     
                     # Load nvm and install Node.js
-                    export NVM_DIR="${WORKSPACE}/.nvm"
+                    export NVM_DIR="${NVM_DIR}"
                     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                     nvm install 16
                     nvm use 16
@@ -31,7 +34,7 @@ pipeline {
             steps { 
                 sh '''
                     # Load nvm
-                    export NVM_DIR="${WORKSPACE}/.nvm"
+                    export NVM_DIR="${NVM_DIR}"
                     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                     nvm use 16
 
@@ -49,7 +52,7 @@ pipeline {
                 withAWS(region: 'us-east-1', credentials: '7d321218-b197-4c83-953a-bd157a1825ee') {
                     sh '''
                         # Load nvm
-                        export NVM_DIR="${WORKSPACE}/.nvm"
+                        export NVM_DIR="${NVM_DIR}"
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                         nvm use 16
 
