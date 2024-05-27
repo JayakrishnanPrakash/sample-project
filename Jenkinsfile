@@ -43,19 +43,16 @@ pipeline {
         }
         stage('Install/Update AWS CLI') {
             steps {
-                sh '''
-                    if ! command -v aws &> /dev/null; then
+                script {
+                    def awsCliDir = "${WORKSPACE}/.local/v2/current"
+                    if (!fileExists(awsCliDir)) {
                         echo "AWS CLI not found, installing..."
-                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip -o awscliv2.zip
-                        ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin
-                    else
+                        installAWSCLI()
+                    } else {
                         echo "AWS CLI already installed, updating..."
-                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip -o awscliv2.zip
-                        ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin --update
-                    fi
-                '''
+                        updateAWSCLI()
+                    }
+                }
             }
         }
         stage('S3 Upload') {
@@ -72,4 +69,25 @@ pipeline {
             }
         }
     }
+}
+
+def fileExists(String path) {
+    def file = new File(path)
+    return file.exists()
+}
+
+def installAWSCLI() {
+    sh '''
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip -o awscliv2.zip
+        ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin
+    '''
+}
+
+def updateAWSCLI() {
+    sh '''
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip -o awscliv2.zip
+        ./aws/install --install-dir ${WORKSPACE}/.local --bin-dir ${WORKSPACE}/.local/bin --update
+    '''
 }
