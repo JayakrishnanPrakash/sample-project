@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') { 
             steps {
                 git branch: 'sample-project', 
-                    url: 'https://github.com/JayakrishnanPrakash/sample-project'
+                    url: 'https://github.com/JayakrishnanPrakash/sample-project' 
             }
         }
         stage('Build') {
