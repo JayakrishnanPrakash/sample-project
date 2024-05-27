@@ -9,7 +9,7 @@ pipeline {
                     
                     # Load nvm and install Node.js
                     export NVM_DIR="$HOME/.nvm"
-                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                     nvm install 16
                     nvm use 16
                     nvm alias default 16
