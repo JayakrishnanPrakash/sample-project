@@ -4,7 +4,7 @@ pipeline {
         NVM_DIR = "${WORKSPACE}/.nvm"
         AWS_REGION = 'us-east-1'
         AWS_CREDENTIALS_ID = '7d321218-b197-4c83-953a-bd157a1825ee'
-        PATH = "${WORKSPACE}/.local/bin:${env.PATH}"
+        PATH = "${WORKSPACE}/.local/bin:${env.PATH}" 
     }
     stages {
         stage('Setup Node.js') {
